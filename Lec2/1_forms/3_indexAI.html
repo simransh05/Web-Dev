@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Personal Information Form</title>
+</head>
+<body>
+    <h2>Personal Information Form</h2>
+    <form action="#" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+
+        <label for="contact">Contact No.:</label>
+        <input type="tel" id="contact" name="contact" pattern="[0-9]{10}">
+
+        <label for="group">Group:</label>
+        <select id="group" name="group">
+            <option value="">Select Group</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

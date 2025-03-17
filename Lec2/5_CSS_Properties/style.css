@@ -1,0 +1,13 @@
+body{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+.heading{
+    font-size: medium;
+}
+.para{
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 2;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 20px 10px 15px 5px;
+}
