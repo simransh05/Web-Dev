@@ -1,0 +1,8 @@
+.contaner{
+    height: 200px;
+    width: 200px;
+    margin: 100px auto;
+    border: 2px solid black;
+    background-color: aqua;
+    transform: rotateX(45 deg);
+}
