@@ -21,3 +21,9 @@
     position: sticky;
     top:10px;
 }
+.contact-info{
+    text-align: center;
+    background-color: aqua;
+    position: sticky;
+    top: 0px;
+}
