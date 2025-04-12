@@ -1,0 +1,18 @@
+#parent{
+    height: 600px;
+    width: 900px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap-reverse; */
+    justify-content: space-around;
+    align-items: baseline;
+    gap: 5px;
+    /* minimum gap */
+}
+#parent>div{
+    font-size: 40px;
+    height: 200px;
+    width: 200px;
+    border: 2px solid black;
+}
