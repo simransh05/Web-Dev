@@ -1,21 +1,14 @@
-Array.prototype.reduceFun = function(fun,initialVal){
-    let total =0;
-    let acc = initialVal;
-    if(acc==undefined){
-        acc=this[0]
-        total=1
+Array.prototype.reduceFun = function (fun) {
+    let acc = this[0];
+    for (let i = 1; i < this.length; i++) {
+        acc = fun(acc, this[i])
     }
-
-    for(let i=1;i<this.length;i++){
-        acc = fun(acc,this[i])
-    }
-
     return acc;
 }
 
-let arr = [5,4,3,2,1]
-let value = arr.reduceFun((item,curr)=>{
-    return item+curr;
+let arr = [1, 2, 3, 4, 5]
+let value = arr.reduceFun((item, curr) => {
+    return item + curr;
 })
 
 console.log(value)
