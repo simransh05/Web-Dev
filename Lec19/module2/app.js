@@ -18,7 +18,7 @@ async function readTasks() {
 
 // Helper to write tasks
 async function writeTasks(tasks) {
-  await fs.writeFile(tasksFile, JSON.stringify(tasks, null, 2));
+  await fs.writeFile(tasksFile, JSON.stringify(tasks));
 }
 
 // GET all tasks
