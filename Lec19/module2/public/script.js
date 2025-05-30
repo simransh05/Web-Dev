@@ -1,53 +1,68 @@
-const taskform = document.getElementById('task-form')
+const taskForm = document.getElementById('task-form')
 const taskInput = document.getElementById('task-input')
 const taskList = document.getElementById('task-list')
-const clearCompletedButtom = document.getElementById('clear-completed')
+const clearCompletedButton = document.getElementById('clear-completed')
 const filterButtonContainer = document.querySelector('.filter-buttons')
-const filterButton= document.querySelectorAll('.filter-buttons button')
+const filterButtons= document.querySelectorAll('.filter-buttons button')
 let activeId = 'all'
 
-let tasks =JSON.parse(localStorage.getItem('tasks'))||[]
+let tasks = []
+
+taskForm.addEventListener('submit',addTask);
 
 function saveTasks(){
-    localStorage.setItem('tasks',JSON.stringify(tasks))
+    axios.post('/tasks',{tasks})
+    .then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    })
 }
 
-taskform.addEventListener('submit',addTask);
+
 function addTask(event){
+
     event.preventDefault();
-    const task = taskInput.value.trim();
+    const task = taskInput.value.trim()
     tasks.push({
         text:task,
-        completed : false
+        completed:false
     })
+
     taskInput.value=''
-     renderTaskList()
-     saveTasks()
+    renderTaskList()
+    saveTasks()
+    //console.log(tasks)
+
 }
 
-function renderTaskList (newTasks=tasks){
+function renderTaskList(newTasks=tasks){
     taskList.innerHTML=''
+
     newTasks.forEach((task,index)=>{
         const li = document.createElement('li')
+
         li.innerHTML=`
-        <span>${task.text}</span>
-        <div>
-        <button class="complete-button">${task.completed?"undo":"complete"}</button>
-        <button class="edit-button">edit</button>
-        <button class="delete-button">delete</button>
-        </div>
+            <span>${task.text}</span>
+            <div>
+                <button class="complete-button">${task.completed?"Undo":"complete"}</button>
+                <button class="edit-button">edit</button>
+                <button class="delete-button">delete</button>
+            </div>
         `
         const deleteButton = li.querySelector('.delete-button')
         const editButton = li.querySelector('.edit-button')
         const completeButton = li.querySelector('.complete-button')
 
-        deleteButton.addEventListener('click',()=>deleteTask(index))
-        editButton.addEventListener('click',()=>editTask(li,index))
-        completeButton.addEventListener('click',()=>completeTask(index))
+        deleteButton.addEventListener('click',()=>{deleteTask(index)})
+        editButton.addEventListener('click',()=>{editTask(li,index)})
+        completeButton.addEventListener('click',()=>{completeTask(index)})
 
         li.className=`task-item ${task.completed?'completed':''}`
+
         taskList.appendChild(li)
     })
+
 }
 
 function deleteTask(index){
@@ -57,7 +72,9 @@ function deleteTask(index){
 }
 
 function editTask(li,index){
+
     const span = li.firstElementChild;
+
     const input = document.createElement('input')
     input.type='text'
     input.value=tasks[index].text
@@ -68,62 +85,69 @@ function editTask(li,index){
         input.addEventListener('blur',()=>{
             tasks[index].text=input.value
             renderTaskList()
+            saveTasks()
         })
     }
-    saveTasks()
 }
 
 function completeTask(index){
-    tasks[index].completed=!tasks[index].completed;
+    tasks[index].completed=!tasks[index].completed
     renderTaskList()
     saveTasks()
 }
 
 filterButtonContainer.addEventListener('click',(event)=>{
     activeId = event.target.getAttribute('id')
-    filterButton.forEach((item)=>{
+
+    filterButtons.forEach((item)=>{
         const itemId = item.id
         if(itemId==activeId){
             item.classList.add('active')
-        }else {
+        }else{
             item.classList.remove('active')
         }
     })
+
     if(activeId=='all'){
         renderTaskList()
     }
+
     if(activeId=='active'){
         let newTasks = tasks.filter((task)=>{
-            return (task.completed==false);
+            return (task.completed==false)
         })
         renderTaskList(newTasks)
     }
+
     if(activeId=='completed'){
         let newTasks = tasks.filter((task)=>{
-            return (task.completed==true);
+            return (task.completed==true)
         })
         renderTaskList(newTasks)
     }
 })
 
-clearCompletedButtom.addEventListener('click',()=>{
-    tasks=tasks.filter((task)=>{
+clearCompletedButton.addEventListener('click',()=>{
+    tasks = tasks.filter((task)=>{
         return (task.completed==false)
     })
+
     if(activeId!='completed'){
         renderTaskList()
-    }else {
+    }else{
         renderTaskList([])
     }
-    saveTasks()
-})
 
-renderTaskList()
+    saveTasks()
+    
+})
 
 function getTasks(){
     axios.get('/tasks')
     .then((res)=>{
         console.log(res)
+        tasks = res.data
+        renderTaskList()
     }).catch((err)=>{
         console.log(err)
     })
