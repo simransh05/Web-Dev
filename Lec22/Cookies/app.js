@@ -73,17 +73,15 @@ app.get('/admin', (req, res) => {
     }
 })
 
-// app.get('/logout',(req,res)=>{
-//     const cookiesInstance = new cookies(req, res);
-//     const user = JSON.parse(cookiesInstance.get('user'));
-//     if (!user) {
-//         return res.redirect('/login');
-//     }
-//     cookiesInstance.set('user',JSON.stringify({
-//         cnt:0
-//     }))
-//     req.redirect('/login')
-// })
+app.get('/logout', (req, res) => {
+    const cookiesInstance = new cookies(req, res);
+    if(!cookiesInstance.get('user')) {
+        return res.redirect('/login');
+    }   
+    cookiesInstance.set('user', '', { maxAge: 0 }); // Clear the cookie
+    res.redirect('/login');
+})
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 })
