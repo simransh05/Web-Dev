@@ -26,7 +26,7 @@ require('./Authentication/passport')
 
 app.use('/',authRouter)
 
-mongoose.connect('mongodb://localhost:27017/lec24')
+mongoose.connect('mongodb://localhost:27017')
     .then(()=>{
         app.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);

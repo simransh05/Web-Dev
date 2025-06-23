@@ -1,8 +1,6 @@
 const passport = require('passport');   
 const bcrypt = require('bcrypt');
-require('dotenv/config')
-
-
+require('dotenv').config();
 
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -10,12 +8,12 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const User = require('../models/user');
 
-console.log(process.env.REDIRECT_URI)
+// console.log(process.env.REDIRECT_URI)
 passport.use(new GoogleStrategy(
     {
         clientID:     process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: 'http://localhost:3000/auth/google/callback',
+        callbackURL: process.env.REDIRECT_URI,
         // scope: ['profile'],
         // accessType: 'Offline',
         passReqToCallback   : true
